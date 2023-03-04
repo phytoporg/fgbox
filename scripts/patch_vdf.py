@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import argparse
 import os
@@ -65,4 +65,4 @@ if __name__=="__main__":
     parser.add_argument('data-path', help="VDF data path to modify")
     parser.add_argument('data-value', help="Data value to set")
 
-    main(parser.parse_arguments())
+    main(parser.parse_args())
