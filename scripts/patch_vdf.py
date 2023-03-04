@@ -5,6 +5,10 @@ import os
 import sys
 from collections import deque
 
+# TEMP
+import json
+# TEMP
+
 def nested_dicts_to_vdf(data):
     pass
 
@@ -41,7 +45,7 @@ def main(args):
         exit(1)
 
     data = vdf_to_nested_dicts(args.vdf_file)
-    print(data)
+    print(json.dumps(data, indent=4))
 
     exit(0) # for now !
 
