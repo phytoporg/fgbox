@@ -1,8 +1,16 @@
+# Grab steamcmd for automating steam app installation, updates and configuration
 mkdir ~/repos; cd ~/repos
 git clone https://aur.archlinux.org/steamcmd.git
 cd steamcmd
 makepkg -si
 
+# Grab fgbox repo for some automation helpers
 cd -
 git clone https://github.com/phytoporg/fgbox.git
 cd fgbox
+
+# Install +R
+./scripts/install --games-db ../data/gamesdb --steamuser $STEAMUSER --steampassword $STEAMPASSWORD --game PlusR
+
+# Update local config so that +R uses proton (doesn't work yet and this probably isn't how we want to do this)
+./scripts/patch_vdf.py --vdf-file ~/.steam/steam/userdata/43691549/config/localconfig.vdf --data-path UserLocalConfigStore.Software.Valve.Steam.Apps.348550 --data-value PLACEHOLDER
