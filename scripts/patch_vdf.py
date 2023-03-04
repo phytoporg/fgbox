@@ -5,9 +5,9 @@ import os
 import sys
 from collections import deque
 
-# TEMP
+#TEMP
 import json
-# TEMP
+#TEMP
 
 def nested_dicts_to_vdf(data):
     pass
@@ -49,11 +49,6 @@ def main(args):
 
     data = vdf_to_nested_dicts(args.vdf_file)
 
-    # TEMP 
-    print(json.dumps(data, indent=4))
-    exit(0)
-    # TEMP 
-
     data_iter = data
     for data_path_token in args.data_path.split('.'):
         if data_path_token not in data_iter:
@@ -66,7 +61,7 @@ def main(args):
     vdf_text = nested_dicts_to_vdf(data)
     
     # TODO: Write the vdf to disk
-    print(vdf_text)
+    print(json.dumps(vdf_text, indent=4))
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
