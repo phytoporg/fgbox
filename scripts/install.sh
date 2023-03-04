@@ -51,7 +51,7 @@ if [ "$GAME" = "" ]; then
     exit 1
 fi
 
-if ! $(which steamcmd) 2>/dev/null; then
+if ! which steamcmd 2>/dev/null; then
     echo "steamcmd not found! Please install it." >&2
     exit 1
 fi
@@ -66,8 +66,8 @@ fi
 # Games database lines are formatted as:
 # gametitle;alias1;alias2;etc|appid
 GAMEDB_RESULT=$(grep "$GAME" "$GAMESDB_PATH")
-GAMEDB_APPID=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,"|"); print a[1]}')
-GAMEDB_APPNAME=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,";"); print a[0]}')
+GAMEDB_APPID=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,"|"); print a[2]}')
+GAMEDB_APPNAME=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,";"); print a[1]}')
 INSTALL_PATH=$GAMES_ROOT/$GAME
 
 echo "Installing '$GAMEDB_APPNAME' to '$INSTALL_PATH'..."
