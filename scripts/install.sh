@@ -2,6 +2,13 @@
 
 ################################################################################
 # install.sh - Installs a game using steamcmd
+# 
+# Usage: ./install.sh
+#    --games-db <path to supported games database file>
+#    --games-root <install root directory for steam games>
+#    --steamuser <steam username for auth>
+#    --steampassword <steam password for auth>
+#    --game <game title or alias for installation>
 ################################################################################
 
 GAMESDB_PATH=$HOME/data/gamesdb
