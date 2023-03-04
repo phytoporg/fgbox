@@ -65,6 +65,22 @@ fi
 
 # Games database lines are formatted as:
 # gametitle;alias1;alias2;etc|appid
-GAMEDB_APPID=$(grep "$GAME" "$GAMESDB_PATH" | awk '{split($0,a,"|"); print a[1]}')
+GAMEDB_RESULT=$(grep "$GAME" "$GAMESDB_PATH")
+GAMEDB_APPID=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,"|"); print a[1]}')
+GAMEDB_APPNAME=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,";"); print a[0]}')
+INSTALL_PATH=$GAMES_ROOT/$GAME
 
-steamcmd +force_install_dir "$GAMES_ROOT/$GAME" +login "$STEAMUSER" "$STEAMPASSWORD" +app_update "$GAMEDB_APPID" +validate +quit
+echo "Installing '$GAMEDB_APPNAME' to '$INSTALL_PATH'..."
+
+# Generate a script and run it via steamcmd
+STEAMCMD_SCRIPT_PATH=$(mktemp)
+
+echo "@ShutdownOnfailedCommand 1" > "$STEAMCMD_SCRIPT_PATH"
+echo "@NoPromptForPassword 1" >> "$STEAMCMD_SCRIPT_PATH"
+echo "force_install_dir $INSTALL_PATH" >> "$STEAMCMD_SCRIPT_PATH"
+echo "login $STEAMUSER $STEAMPASSWORD" >> "$STEAMCMD_SCRIPT_PATH"
+echo "app_update $GAMEDB_APPID validate" >> "$STEAMCMD_SCRIPT_PATH"
+echo "quit" >> "$STEAMCMD_SCRIPT_PATH"
+
+steamcmd +runscript "$STEAMCMD_SCRIPT_PATH"
+rm "$STEAMCMD_SCRIPT_PATH"
