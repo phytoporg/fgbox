@@ -77,6 +77,7 @@ STEAMCMD_SCRIPT_PATH=$(mktemp)
 
 echo "@ShutdownOnfailedCommand 1" > "$STEAMCMD_SCRIPT_PATH"
 echo "@NoPromptForPassword 1" >> "$STEAMCMD_SCRIPT_PATH"
+echo "@sSteamCmdForcePlatformType windows" >> "$STEAMCMD_SCRIPT_PATH"
 echo "force_install_dir $INSTALL_PATH" >> "$STEAMCMD_SCRIPT_PATH"
 echo "login $STEAMUSER $STEAMPASSWORD" >> "$STEAMCMD_SCRIPT_PATH"
 echo "app_update $GAMEDB_APPID validate" >> "$STEAMCMD_SCRIPT_PATH"
