@@ -61,8 +61,8 @@ def main(args):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('vdf-file', help="Target VDF file to modify")
-    parser.add_argument('data-path', help="VDF data path to modify")
-    parser.add_argument('data-value', help="Data value to set")
+    parser.add_argument('--vdf-file', help="Target VDF file to modify")
+    parser.add_argument('--data-path', help="VDF data path to modify")
+    parser.add_argument('--data-value', help="Data value to set")
 
     main(parser.parse_args())
