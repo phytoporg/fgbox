@@ -21,11 +21,14 @@ def vdf_to_nested_dicts(vdf_file_path):
     dict_stack.append(data)
 
     for line in all_lines:
-        line_tokens = line.split()
+        # Strip all double quotes, we'll reintroduce them when writing to disk
+        line_tokens = [token.replace('"','') for token in line.split()]
         if len(line_tokens) == 1:
             token = line_tokens[0]
             if token not in ['{', '}']:
                 # New nesting level and key
+                token = token.replace('"', '')
+
                 new_data = dict()
                 dict_stack[-1][token] = new_data
                 dict_stack.append(new_data)
@@ -45,9 +48,11 @@ def main(args):
         exit(1)
 
     data = vdf_to_nested_dicts(args.vdf_file)
-    print(json.dumps(data, indent=4))
 
-    exit(0) # for now !
+    # TEMP 
+    print(json.dumps(data, indent=4))
+    exit(0)
+    # TEMP 
 
     data_iter = data
     for data_path_token in args.data_path.split('.'):
