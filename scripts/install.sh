@@ -65,18 +65,29 @@ if ! which steamcmd 2>/dev/null; then
     exit 1
 fi
 
-# We need exactly one match. Zero's too few, dunno what to do with more than one hit.
-GAMEDB_SEARCH_COUNT=$(grep -c "$GAME" "$GAMESDB_PATH")
+GAMEDB_SEARCH_RESULT=$(cat "$GAMESDB_PATH" | jq '.games[] | slect(.aliases[] | contains("$GAME"))')
+if [ "$GAMEDB_SEARCH_RESULT" == "" ]; then
+    echo "Did not find any games matching search query '$GAME'." >&2
+    exit 1
+fi
+
+# We need exactly one match.
+GAMEDB_SEARCH_COUNT=$(echo "$GAMEDB_SEARCH_RESULT" | wc -l)
 if [ "$GAMEDB_SEARCH_COUNT" != "1" ]; then
-    echo "Invalid search query '$GAME', found $GAMEDB_SEARCH_COUNT results" >&2
+    echo "Invalid search query '$GAME', found '$GAMEDB_SEARCH_COUNT' results" >&2
+    exit 1
+fi
+
+GAMEDB_IS_SUPPORTED=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.supported')
+if [ "$GAMEDB_IS_SUPPORTED" == "false" ]; then
+    echo "'$GAME' is not currently supported." >&2
     exit 1
 fi
 
 # Games database lines are formatted as:
 # gametitle;alias1;alias2;etc|appid
-GAMEDB_RESULT=$(grep "$GAME" "$GAMESDB_PATH")
-GAMEDB_APPID=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,"|"); print a[2]}')
-GAMEDB_APPNAME=$(echo "$GAMEDB_RESULT" | awk '{split($0,a,";"); print a[1]}')
+GAMEDB_APPID=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.appid')
+GAMEDB_APPNAME=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.title')
 INSTALL_PATH=$GAMES_ROOT/$GAME
 
 echo "Installing '$GAMEDB_APPNAME' to '$INSTALL_PATH'..."
