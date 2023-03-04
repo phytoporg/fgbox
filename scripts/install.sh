@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 ################################################################################
 # install.sh - Installs a game using steamcmd
 ################################################################################
@@ -29,7 +31,7 @@ while (( "$#" )); do
     shift
 done
 
-mkdir -p $GAMES_ROOT
+mkdir -p "$GAMES_ROOT"
 
 if [ ! -f "$GAMESDB_PATH" ]; then
     echo "Invalid or missing games database file: $GAMESDB_PATH" >&2
@@ -57,7 +59,7 @@ if ! which steamcmd 2>/dev/null; then
 fi
 
 # We need exactly one match. Zero's too few, dunno what to do with more than one hit.
-GAMEDB_SEARCH_COUNT=$(grep "$GAME" "$GAMESDB_PATH" | wc -l)
+GAMEDB_SEARCH_COUNT=$(grep -c "$GAME" "$GAMESDB_PATH")
 if [ "$GAMEDB_SEARCH_COUNT" != "1" ]; then
     echo "Invalid search query '$GAME', found $GAMEDB_SEARCH_COUNT results" >&2
     exit 1
