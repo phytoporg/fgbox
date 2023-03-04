@@ -2,3 +2,7 @@ mkdir ~/repos; cd ~/repos
 git clone https://aur.archlinux.org/steamcmd.git
 cd steamcmd
 makepkg -si
+
+cd -
+git clone https://github.com/phytoporg/fgbox.git
+cd fgbox
