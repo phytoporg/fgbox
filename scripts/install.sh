@@ -38,7 +38,10 @@ while (( "$#" )); do
     shift
 done
 
-mkdir -p "$GAMES_ROOT"
+if ! mkdir -p "$GAMES_ROOT" 2>/dev/null; then
+    echo "Failed to create games root directory '$GAMES_ROOT'" >&2
+    exit 1
+fi
 
 if [ ! -f "$GAMESDB_PATH" ]; then
     echo "Invalid or missing games database file: $GAMESDB_PATH" >&2
@@ -65,7 +68,7 @@ if ! which steamcmd 2>/dev/null; then
     exit 1
 fi
 
-GAMEDB_SEARCH_RESULT=$(cat "$GAMESDB_PATH" | jq '.games[] | slect(.aliases[] | contains("$GAME"))')
+GAMEDB_SEARCH_RESULT=$(jq '.games[] | select(.aliases[] | contains("$GAME"))' "$GAMESDB_PATH")
 if [ "$GAMEDB_SEARCH_RESULT" == "" ]; then
     echo "Did not find any games matching search query '$GAME'." >&2
     exit 1
