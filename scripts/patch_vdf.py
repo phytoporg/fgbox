@@ -35,7 +35,7 @@ def vdf_to_nested_dicts(vdf_file_path):
 
     return data
         
-int main(args):
+def main(args):
     if not os.path.exists(args.vdf_file):
         print(f'Could not find VDF file: {args.vdf_file}', file=sys.stderr)
         exit(1)
