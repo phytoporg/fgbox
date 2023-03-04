@@ -1,2 +1,2 @@
 xf86-video-intel steam alsa-utils alsa-tools cinnamon gdm mesa xorg-init xterm xorg-twm vim
-git base-devel jq
+git base-devel python3
