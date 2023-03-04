@@ -2,3 +2,4 @@
 - get patch_vdf.py working
 - create configure.sh which invokes patch_vdf.py
 - comment files for other humans (once stuff actually works)
+- create initial README pass
