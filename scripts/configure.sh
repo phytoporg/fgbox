@@ -21,7 +21,8 @@ while (( "$#" )); do
     shift
 done
 
-USERCONFIG_PATH=$(ls ~/.steam/steam/userdata)
+USERCONFIG_ID=$(ls ~/.steam/steam/userdata)
+USERCONFIG_PATH="~/.steam/steam/userdata/$USERCONFIG_ID"
 #TODO: Sanity check USERCONFIG_PATH
 
 LOCAL_VDF_PATH="$USERCONFIG_PATH/config/localconfig.vdf"
