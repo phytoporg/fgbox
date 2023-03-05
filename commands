@@ -9,6 +9,9 @@ cd -
 git clone https://github.com/phytoporg/fgbox.git
 cd fgbox
 
+# DNS issues
+sudo echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
 # Install +R
 ./scripts/install --games-db ../data/gamesdb --steamuser $STEAMUSER --steampassword $STEAMPASSWORD --game PlusR
 
