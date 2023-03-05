@@ -33,9 +33,9 @@ NOW=$(date +"%s")
 ./patch_vdf.py \
     --vdf-file "$LOCAL_VDF_PATH" \
     --data-path "UserLocalConfigStore.Software.Valve.Steam.apps.$APP_ID" \
-    --data-value "{ \
-        \"LaunchOptions\" : \"PROTON_NO_ESYNC=1 %command%\", \
-        \"ViewedLaunchEULA\" : \"1\", \
-        \"ViewedSteamPlay\" : \"1\", \
-        \"LastPlayed\" : \"$NOW\" \ }" \
+    --data-value "{
+        \"LaunchOptions\" : \"PROTON_NO_ESYNC=1 %command%\",
+        \"ViewedLaunchEULA\" : \"1\",
+        \"ViewedSteamPlay\" : \"1\",
+        \"LastPlayed\" : \"$NOW\" }" \
         > "$TEMP_VDF_OUT"
