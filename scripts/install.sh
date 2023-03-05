@@ -63,19 +63,19 @@ if [ "$GAME" = "" ]; then
     exit 1
 fi
 
-if ! which steamcmd 2>/dev/null; then
+if ! which steamcmd > /dev/null 2>&1; then
     echo "steamcmd not found! Please install it." >&2
     exit 1
 fi
 
-GAMEDB_SEARCH_RESULT=$(jq '.games[] | select(.aliases[] | contains("$GAME"))' "$GAMESDB_PATH")
+GAMEDB_SEARCH_RESULT=$(jq --arg game "${GAME}" '.games[] | select(.aliases[] | contains($game))' "$GAMESDB_PATH")
 if [ "$GAMEDB_SEARCH_RESULT" == "" ]; then
     echo "Did not find any games matching search query '$GAME'." >&2
     exit 1
 fi
 
 # We need exactly one match.
-GAMEDB_SEARCH_COUNT=$(echo "$GAMEDB_SEARCH_RESULT" | wc -l)
+GAMEDB_SEARCH_COUNT=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.title' | | wc -l)
 if [ "$GAMEDB_SEARCH_COUNT" != "1" ]; then
     echo "Invalid search query '$GAME', found '$GAMEDB_SEARCH_COUNT' results" >&2
     exit 1
