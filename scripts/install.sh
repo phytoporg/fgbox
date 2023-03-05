@@ -115,7 +115,7 @@ steamcmd +runscript "$STEAMCMD_SCRIPT_PATH"
 rm "$STEAMCMD_SCRIPT_PATH"
 
 if [ "$GAMEDB_PROTON" == "true" ]; then
-    ./configure --app-id "$GAMEDB_APPID" --proton
+    ./configure.sh --app-id "$GAMEDB_APPID" --proton
 else
-    ./configure --app-id "$GAMEDB_APPID" 
+    ./configure.sh --app-id "$GAMEDB_APPID" 
 fi
