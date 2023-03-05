@@ -75,7 +75,7 @@ if [ "$GAMEDB_SEARCH_RESULT" == "" ]; then
 fi
 
 # We need exactly one match.
-GAMEDB_SEARCH_COUNT=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.title' | | wc -l)
+GAMEDB_SEARCH_COUNT=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.title' | wc -l)
 if [ "$GAMEDB_SEARCH_COUNT" != "1" ]; then
     echo "Invalid search query '$GAME', found '$GAMEDB_SEARCH_COUNT' results" >&2
     exit 1

@@ -85,14 +85,14 @@ def vdf_to_nested_dicts(vdf_file_path):
     return data
         
 def main(args):
-    if not os.path.exists(args.vdf_file_in):
-        print(f'Could not find VDF file: {args.vdf_file_in}', file=sys.stderr)
+    if not os.path.exists(args.vdf_file):
+        print(f'Could not find VDF file: {args.vdf_file}', file=sys.stderr)
         exit(1)
 
     # TODO: handle parse failures
     parsed_data_value = json.loads(args.data_value)
 
-    data = vdf_to_nested_dicts(args.vdf_file_in)
+    data = vdf_to_nested_dicts(args.vdf_file)
 
     prev_iter = None
     data_iter = data
