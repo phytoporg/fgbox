@@ -39,3 +39,5 @@ NOW=$(date +"%s")
         \"ViewedSteamPlay\" : \"1\",
         \"LastPlayed\" : \"$NOW\" }" \
         > "$TEMP_VDF_OUT"
+
+mv "$TEMP_VDF_OUT" "$LOCAL_VDF_PATH"
