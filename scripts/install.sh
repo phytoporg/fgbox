@@ -91,6 +91,7 @@ fi
 # gametitle;alias1;alias2;etc|appid
 GAMEDB_APPID=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.appid')
 GAMEDB_APPNAME=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.title')
+GAMEDB_PROTON=$(echo "$GAMEDB_SEARCH_RESULT" | jq '.proton')
 INSTALL_PATH=$GAMES_ROOT/$GAME
 
 echo "Installing '$GAMEDB_APPNAME' to '$INSTALL_PATH'..."
@@ -100,7 +101,11 @@ STEAMCMD_SCRIPT_PATH=$(mktemp)
 
 echo "@ShutdownOnfailedCommand 1" > "$STEAMCMD_SCRIPT_PATH"
 echo "@NoPromptForPassword 1" >> "$STEAMCMD_SCRIPT_PATH"
-echo "@sSteamCmdForcePlatformType windows" >> "$STEAMCMD_SCRIPT_PATH"
+
+if [ "$GAMEDB_PROTON" == "true" ]; then
+    echo "@sSteamCmdForcePlatformType windows" >> "$STEAMCMD_SCRIPT_PATH"
+fi
+
 echo "force_install_dir $INSTALL_PATH" >> "$STEAMCMD_SCRIPT_PATH"
 echo "login $STEAMUSER $STEAMPASSWORD" >> "$STEAMCMD_SCRIPT_PATH"
 echo "app_update $GAMEDB_APPID validate" >> "$STEAMCMD_SCRIPT_PATH"
@@ -108,3 +113,9 @@ echo "quit" >> "$STEAMCMD_SCRIPT_PATH"
 
 steamcmd +runscript "$STEAMCMD_SCRIPT_PATH"
 rm "$STEAMCMD_SCRIPT_PATH"
+
+if [ "$GAMEDB_PROTON" == "true" ]; then
+    ./configure --app-id "$GAMEDB_APPID" --proton
+else
+    ./configure --app-id "$GAMEDB_APPID" 
+fi
