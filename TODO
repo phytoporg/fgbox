@@ -1,5 +1,11 @@
-- gamesdb should be a json file
-- get patch_vdf.py working
-- create configure.sh which invokes patch_vdf.py
+- ditch steamcmd, it's not great for launching games
+- need extra step to configure proton:
+-- ~/.local/share/Steam/config/config.vdf
+    InstallConfigStore.Software.Valve.Steam.CompatToolMapping.<APPID> = 
+    {
+        "name" "proton_experimental"
+        "config" ""
+        "priority" "250"
+    }
 - comment files for other humans (once stuff actually works)
 - create initial README pass
