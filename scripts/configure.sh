@@ -28,16 +28,18 @@ USERCONFIG_PATH="/home/$USER/.steam/steam/userdata/$USERCONFIG_ID"
 LOCAL_VDF_PATH="$USERCONFIG_PATH/config/localconfig.vdf"
 #TODO: Sanity check LOCAL_VDF_PATH
 
-TEMP_VDF_OUT=$(mktemp).vdf
-NOW=$(date +"%s")
-./patch_vdf.py \
-    --vdf-file "$LOCAL_VDF_PATH" \
-    --data-path "UserLocalConfigStore.Software.Valve.Steam.apps.$APP_ID" \
-    --data-value "{
-        \"LaunchOptions\" : \"PROTON_NO_ESYNC=1 %command%\",
-        \"ViewedLaunchEULA\" : \"1\",
-        \"ViewedSteamPlay\" : \"1\",
-        \"LastPlayed\" : \"$NOW\" }" \
-        > "$TEMP_VDF_OUT"
+if [ "$PROTON" ]; then
+    TEMP_VDF_OUT=$(mktemp).vdf
+    NOW=$(date +"%s")
+    ./patch_vdf.py \
+        --vdf-file "$LOCAL_VDF_PATH" \
+        --data-path "UserLocalConfigStore.Software.Valve.Steam.apps.$APP_ID" \
+        --data-value "{
+            \"LaunchOptions\" : \"PROTON_NO_ESYNC=1 %command%\",
+            \"ViewedLaunchEULA\" : \"1\",
+            \"ViewedSteamPlay\" : \"1\",
+            \"LastPlayed\" : \"$NOW\" }" \
+            > "$TEMP_VDF_OUT"
 
-mv "$TEMP_VDF_OUT" "$LOCAL_VDF_PATH"
+    mv "$TEMP_VDF_OUT" "$LOCAL_VDF_PATH"
+fi
