@@ -1,4 +1,7 @@
 - ditch steamcmd, it's not great for launching games
+-- installation should just use steam cli
+- config step needs PROTON_USE_WINED3D=1 (system settings?)
+- patch_vdf needs an "--add-missing-paths" option or something similar
 - need extra step to configure proton:
 -- ~/.local/share/Steam/config/config.vdf
     InstallConfigStore.Software.Valve.Steam.CompatToolMapping.<APPID> = 
