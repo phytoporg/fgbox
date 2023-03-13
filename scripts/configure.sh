@@ -50,9 +50,9 @@ if [ "$PROTON" ]; then
         --vdf-file "$INSTALL_VDF_PATH" \
         --data-path "InstallConfigStore.Software.Valve.Steam.CompatToolMapping.$APP_ID" \
         --data-value "{
-            \"name\" \"proton_experimental\",
-            \"config\" \"\",
-            \"priority\" \"250\" }" \
+            \"name\" : \"proton_experimental\",
+            \"config\" : \"\",
+            \"priority\" : \"250\" }" \
             > "$TEMP_VDF_OUT"
 
     mv "$TEMP_VDF_OUT" "$INSTALL_VDF_PATH"
