@@ -1,0 +1,6 @@
+{
+    "hardware_profiles" : 
+    [
+        "hp_minipc" : { "use_wined3d" : true }
+    ]
+}
