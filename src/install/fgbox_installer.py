@@ -47,13 +47,13 @@ if archinstall.arguments['harddrive']:
 
     print(f"Formatting {archinstall.arguments['harddrive']} in ", end='')
     with archinstall.Filesystem(archinstall.arguments['harddrive'], archinstall.GPT) as fs:
-		if archinstall.has_uefi() is False:
-			mode = archinstall.MBR
+        if archinstall.has_uefi() is False:
+            mode = archinstall.MBR
 
-		for drive in archinstall.arguments.get('harddrives', []):
-			if archinstall.arguments.get('disk_layouts', {}).get(drive.path):
-				with archinstall.Filesystem(drive, mode) as fs:
-					fs.load_layout(archinstall.arguments['disk_layouts'][drive.path])
+        for drive in archinstall.arguments.get('harddrives', []):
+            if archinstall.arguments.get('disk_layouts', {}).get(drive.path):
+                with archinstall.Filesystem(drive, mode) as fs:
+                    fs.load_layout(archinstall.arguments['disk_layouts'][drive.path])
 
 mountpoint = archinstall.storage.get('MOUNT_POINT', '/mnt')
 with archinstall.Installer(mountpoint) as installation:
