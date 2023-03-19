@@ -3,6 +3,7 @@
 import archinstall
 from archinstall import User
 
+# TODO: Migrate to config
 ADDITIONAL_PACKAGES=[
     # X
     "xorg",
@@ -46,29 +47,31 @@ if archinstall.arguments['harddrive']:
 
     print(f"Formatting {archinstall.arguments['harddrive']} in ", end='')
     with archinstall.Filesystem(archinstall.arguments['harddrive'], archinstall.GPT) as fs:
-        # Use the whole disk
-        if archinstall.arguments['harddrive'].keep_partitions is False:
-            # Okay, this function doesn't work for some reason :( Gotta figure something else out I guess.
-            fs.use_entire_disk(root_filesystem_type=archinstall.arguments.get('filesystem', 'btrfs'))
+		if archinstall.has_uefi() is False:
+			mode = archinstall.MBR
 
-        boot = fs.find_partition('/boot')
-        root = fs.find_partition('/')
+		for drive in archinstall.arguments.get('harddrives', []):
+			if archinstall.arguments.get('disk_layouts', {}).get(drive.path):
+				with archinstall.Filesystem(drive, mode) as fs:
+					fs.load_layout(archinstall.arguments['disk_layouts'][drive.path])
 
-        boot.format('fat32')
-        root.format(root.filesystem)
-        root.mount('/mnt')
-        boot.mount('/mnt/boot')
+mountpoint = archinstall.storage.get('MOUNT_POINT', '/mnt')
+with archinstall.Installer(mountpoint) as installation:
+    if archinstall.arguments.get('disk_layouts'):
+        installation.mount_ordered_layout(archinstall.arguments['disk_layouts'])
 
-with archinstall.Installer('/mnt') as installation:
-    if installation.minimal_installation(multilib=True):
-        installation.set_hostname('arch-fgbox')
-        installation.add_bootloader()
-        installation.copy_iso_network_config(enable_services=True)
+    for partition in installation.partitions:
+        if partition.mountpoint == installation.target + '/boot':
+            if partition.size <= 0.25: # in GB
+                raise archinstall.DiskError(
+                        "The selected /boot partition in use is not large enough " 
+                        "to properly install a boot loader. Please resize it to at "
+                        "least 256MB and re-run the installation.")
+    # to generate a fstab directory holder. Avoids an error on exit and at the same 
+    # time checks the procedure
+    target = pathlib.Path(f"{mountpoint}/etc/fstab")
+    if not target.parent.exists():
+        target.parent.mkdir(parents=True)
 
-        installation.add_additional_packages(ADDITIONAL_PACKAGES)
-        installation.install_profile('minimal')
-
-        # Linksys router security model for now :P
-        user_sudo = True
-        admin_user = User('admin', 'password', user_sudo)
-        installation.user_create(admin_user)
+    installation.copy_iso_network_config(enable_services=True)
+    installation.add_additional_packages(ADDITIONAL_PACKAGES)
