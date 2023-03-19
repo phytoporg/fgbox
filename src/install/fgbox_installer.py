@@ -18,6 +18,7 @@ ADDITIONAL_PACKAGES=[
     # audio
     "alsa-utils",
     "alsa-tools",
+    "pulseaudio",
 
     # dev
     "vim",
@@ -58,6 +59,7 @@ if archinstall.arguments['harddrive']:
 
 mountpoint = archinstall.storage.get('MOUNT_POINT', '/mnt')
 with archinstall.Installer(mountpoint) as installation:
+
     if archinstall.arguments.get('disk_layouts'):
         installation.mount_ordered_layout(archinstall.arguments['disk_layouts'])
 
@@ -74,6 +76,9 @@ with archinstall.Installer(mountpoint) as installation:
     if not target.parent.exists():
         target.parent.mkdir(parents=True)
 
+    installation.add_bootloader()
+    installation.install_profile('minimal')
     installation.copy_iso_network_config(enable_services=True)
+    installation.activate_time_synchronization()
     installation.enable_multilib_repository()
     installation.add_additional_packages(ADDITIONAL_PACKAGES)
