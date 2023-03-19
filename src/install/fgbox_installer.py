@@ -42,7 +42,7 @@ if archinstall.arguments.get('help', None):
     archinstall.log(' - Optional systemd network via --network')
     archinstall.log()
 
-# archinstall.arguments['harddrive'] = archinstall.select_disk(archinstall.all_blockdevices())
+archinstall.arguments['harddrive'] = archinstall.select_disk(archinstall.all_blockdevices())
 if archinstall.arguments['harddrive']:
     archinstall.arguments['harddrive'].keep_partitions = False
 
