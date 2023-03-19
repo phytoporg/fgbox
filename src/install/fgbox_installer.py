@@ -11,6 +11,9 @@ ADDITIONAL_PACKAGES=[
     "xorg-xinit",
     "xterm",
 
+    # base
+    "grub",
+
     # gfx
     "mesa",
     "xf86-video-intel",
