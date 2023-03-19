@@ -41,7 +41,7 @@ if archinstall.arguments.get('help', None):
     archinstall.log(' - Optional systemd network via --network')
     archinstall.log()
 
-archinstall.arguments['harddrive'] = archinstall.select_disk(archinstall.all_blockdevices())
+# archinstall.arguments['harddrive'] = archinstall.select_disk(archinstall.all_blockdevices())
 if archinstall.arguments['harddrive']:
     archinstall.arguments['harddrive'].keep_partitions = False
 
@@ -62,11 +62,11 @@ with archinstall.Installer(mountpoint) as installation:
 
     for partition in installation.partitions:
         if partition.mountpoint == installation.target + '/boot':
-            if partition.size <= 0.25: # in GB
+            if partition.size <= 0.19: # in GB
                 raise archinstall.DiskError(
                         "The selected /boot partition in use is not large enough " 
                         "to properly install a boot loader. Please resize it to at "
-                        "least 256MB and re-run the installation.")
+                        "least 200MB and re-run the installation.")
     # to generate a fstab directory holder. Avoids an error on exit and at the same 
     # time checks the procedure
     target = pathlib.Path(f"{mountpoint}/etc/fstab")
