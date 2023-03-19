@@ -2,6 +2,7 @@
 
 import archinstall
 from archinstall import User
+import pathlib
 
 # TODO: Migrate to config
 ADDITIONAL_PACKAGES=[
