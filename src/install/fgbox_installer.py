@@ -70,15 +70,17 @@ with archinstall.Installer(mountpoint) as installation:
                         "The selected /boot partition in use is not large enough " 
                         "to properly install a boot loader. Please resize it to at "
                         "least 200MB and re-run the installation.")
+
     # to generate a fstab directory holder. Avoids an error on exit and at the same 
     # time checks the procedure
     target = pathlib.Path(f"{mountpoint}/etc/fstab")
     if not target.parent.exists():
         target.parent.mkdir(parents=True)
 
+    installation.set_hostname(archinstall.arguments.get('hostname', 'arch-fgbox'))
     installation.add_bootloader()
-    installation.install_profile('minimal')
+    installation.enable_multilib_repository()
     installation.copy_iso_network_config(enable_services=True)
     installation.activate_time_synchronization()
-    installation.enable_multilib_repository()
     installation.add_additional_packages(ADDITIONAL_PACKAGES)
+    installation.install_profile('minimal')
