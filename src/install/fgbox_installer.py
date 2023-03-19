@@ -72,11 +72,11 @@ with archinstall.Installer(mountpoint) as installation:
                         "least 200MB and re-run the installation.")
 
     installation.set_hostname(archinstall.arguments.get('hostname', 'arch-fgbox'))
-    installation.add_additional_packages('grub')
+    installation.add_additional_packages(['coreutils', 'sed', 'grub'])
     installation.add_bootloader(bootloader='grub-install')
     installation.enable_multilib_repository()
     installation.copy_iso_network_config(enable_services=True)
-    installation.activate_time_synchronization()
+    # installation.activate_time_syncronization()
     installation.add_additional_packages(ADDITIONAL_PACKAGES)
     installation.install_profile('minimal')
     installation.genfstab()
