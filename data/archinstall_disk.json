@@ -18,7 +18,7 @@
                 "filesystem": {
                     "format": "ext4"
                 },
-                "mountpoint": null,
+                "mountpoint": "/",
                 "size": "100%",
                 "start": "206MiB",
                 "type": "primary",
