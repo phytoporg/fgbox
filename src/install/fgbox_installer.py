@@ -75,4 +75,5 @@ with archinstall.Installer(mountpoint) as installation:
         target.parent.mkdir(parents=True)
 
     installation.copy_iso_network_config(enable_services=True)
+    installation.enable_multilib_repository()
     installation.add_additional_packages(ADDITIONAL_PACKAGES)
