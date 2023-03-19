@@ -78,7 +78,7 @@ with archinstall.Installer(mountpoint) as installation:
         target.parent.mkdir(parents=True)
 
     installation.set_hostname(archinstall.arguments.get('hostname', 'arch-fgbox'))
-    installation.add_bootloader()
+    installation.add_bootloader(bootloader='grub-install')
     installation.enable_multilib_repository()
     installation.copy_iso_network_config(enable_services=True)
     installation.activate_time_synchronization()
