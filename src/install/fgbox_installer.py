@@ -20,7 +20,6 @@ ADDITIONAL_PACKAGES=[
     # dev
     "vim",
     "python",
-    "archinstall",
 
     # gaming for gamers
     "ttf-liberation",
@@ -49,6 +48,7 @@ if archinstall.arguments['harddrive']:
     with archinstall.Filesystem(archinstall.arguments['harddrive'], archinstall.GPT) as fs:
         # Use the whole disk
         if archinstall.arguments['harddrive'].keep_partitions is False:
+            # Okay, this function doesn't work for some reason :( Gotta figure something else out I guess.
             fs.use_entire_disk(root_filesystem_type=archinstall.arguments.get('filesystem', 'btrfs'))
 
         boot = fs.find_partition('/boot')

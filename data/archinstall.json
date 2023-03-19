@@ -1,0 +1,107 @@
+{
+    "audio": "pulseaudio",
+    "config_version": "2.5.3",
+    "debug": false,
+    "harddrives": [
+        "/dev/sda"
+    ],
+    "hostname": "arch-fgbox",
+    "mirror-region": {
+        "Worldwide": {
+            "http://mirror.rackspace.com/archlinux/$repo/os/$arch": true,
+            "https://geo.mirror.pkgbuild.com/$repo/os/$arch": true,
+            "https://mirror.rackspace.com/archlinux/$repo/os/$arch": true
+        }
+    },
+    "nic": {
+        "dhcp": true,
+        "dns": null,
+        "gateway": null,
+        "iface": null,
+        "ip": null,
+        "type": "iso"
+    },
+    "no_pkg_lookups": false,
+    "offline": false,
+    "packages": [
+        "vim"
+    ],
+    "profile": {
+        "path": "/usr/lib/python3.10/site-packages/archinstall/profiles/minimal.py"
+    },
+    "script": "fgbox_installer",
+    "silent": false,
+    "version": "2.5.3",
+    "!users": [
+        {
+            "!password": "password",
+            "sudo": true,
+            "username": "admin"
+        }
+    ],
+    "/dev/sda": {
+        "partitions": [
+            {
+                "boot": true,
+                "encrypted": false,
+                "filesystem": {
+                    "format": "fat32"
+                },
+                "mountpoint": "/boot",
+                "size": "203MiB",
+                "start": "3MiB",
+                "type": "primary",
+                "wipe": true
+            },
+            {
+                "btrfs": {
+                    "subvolumes": [
+                        {
+                            "compress": false,
+                            "mountpoint": "/",
+                            "name": "@",
+                            "nodatacow": false
+                        },
+                        {
+                            "compress": false,
+                            "mountpoint": "/home",
+                            "name": "@home",
+                            "nodatacow": false
+                        },
+                        {
+                            "compress": false,
+                            "mountpoint": "/var/log",
+                            "name": "@log",
+                            "nodatacow": false
+                        },
+                        {
+                            "compress": false,
+                            "mountpoint": "/var/cache/pacman/pkg",
+                            "name": "@pkg",
+                            "nodatacow": false
+                        },
+                        {
+                            "compress": false,
+                            "mountpoint": "/.snapshots",
+                            "name": "@.snapshots",
+                            "nodatacow": false
+                        }
+                    ]
+                },
+                "encrypted": false,
+                "filesystem": {
+                    "format": "btrfs",
+                    "mount_options": [
+                        "compress=zstd"
+                    ]
+                },
+                "mountpoint": null,
+                "size": "100%",
+                "start": "206MiB",
+                "type": "primary",
+                "wipe": true
+            }
+        ],
+        "wipe": true
+    }
+}
