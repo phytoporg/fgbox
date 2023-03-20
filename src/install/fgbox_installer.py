@@ -80,4 +80,11 @@ with archinstall.Installer(mountpoint) as installation:
         # installation.activate_time_syncronization()
         installation.add_additional_packages(ADDITIONAL_PACKAGES)
         installation.install_profile('minimal')
+
+        if users := archinstall.arguments.get('!users', None):
+            installation.create_users(users)
+
+        if (root_pw := archinstall.arguments.get('!root-password', None)) and len(root_pw):
+            installation.user_set_pw('root', root_pw)
+
         installation.genfstab()
