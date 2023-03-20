@@ -39,9 +39,5 @@
             "sudo": true,
             "username": "admin"
         }
-    ],
-    "custom-commands" : [
-        "cp -r /etc/systemd/system/getty@tty1.service.d/admin.autologin.conf /mnt/archinstall/etc/systemd/system/getty@tty1.service.d/autologin.conf",
-        "cp -r /etc/skel /mnt/archinstall/etc/skel"
     ]
 }
