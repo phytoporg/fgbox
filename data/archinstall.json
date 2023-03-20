@@ -6,6 +6,7 @@
         "/dev/sda"
     ],
     "hostname": "arch-fgbox",
+    "keyboard-layout": "us",
     "mirror-region": {
         "Worldwide": {
             "http://mirror.rackspace.com/archlinux/$repo/os/$arch": true,
