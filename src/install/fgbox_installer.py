@@ -98,11 +98,15 @@ with archinstall.Installer(mountpoint) as installation:
         src_autologin = '/etc/systemd/system/getty@tty1.service.d/admin.autologin.conf'
         dst_autologin = f'{installation.target}/etc/systemd/system/getty@tty1.service.d/autologin.conf'
         print(f'Copying {src_autologin} to {dst_autologin}')
-        os.makedirs(os.path.dirname(dst_autologin))
+        dst_autologin_dir = os.path.dirname(dst_autologin)
+        if not os.path.exists(dst_autologin_dir)
+            os.makedirs(dst_autologin_dir)
         shutil.copyfile(src_autologin, dst_autologin)
 
         # Copy scripts for home dir, Steam configuration
         src_home = '/etc/skel'
         dst_home = f'{installation.target}/etc/skel'
+        if os.path.exists(dst_home):
+            shutil.rmtree(dst_home)
         print(f'Copying {src_home} to {dst_home}')
         shutil.copytree(src_home, dst_home)
