@@ -71,12 +71,13 @@ with archinstall.Installer(mountpoint) as installation:
                         "to properly install a boot loader. Please resize it to at "
                         "least 200MB and re-run the installation.")
 
-    installation.set_hostname(archinstall.arguments.get('hostname', 'arch-fgbox'))
-    installation.add_additional_packages(['coreutils', 'sed', 'grub', 'systemd'])
-    installation.add_bootloader(bootloader='grub-install')
-    installation.enable_multilib_repository()
-    installation.copy_iso_network_config(enable_services=True)
-    # installation.activate_time_syncronization()
-    installation.add_additional_packages(ADDITIONAL_PACKAGES)
-    installation.install_profile('minimal')
-    installation.genfstab()
+    if installation.minimal_installation():
+        installation.set_hostname(archinstall.arguments.get('hostname', 'arch-fgbox'))
+        installation.add_additional_packages(['coreutils', 'sed', 'grub', 'systemd'])
+        installation.add_bootloader(bootloader='grub-install')
+        installation.enable_multilib_repository()
+        installation.copy_iso_network_config(enable_services=True)
+        # installation.activate_time_syncronization()
+        installation.add_additional_packages(ADDITIONAL_PACKAGES)
+        installation.install_profile('minimal')
+        installation.genfstab()
