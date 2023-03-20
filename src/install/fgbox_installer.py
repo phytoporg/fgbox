@@ -4,6 +4,7 @@ import archinstall
 from archinstall import User
 import pathlib
 import shutil
+import os
 
 # TODO: Migrate to config
 ADDITIONAL_PACKAGES=[
@@ -97,10 +98,11 @@ with archinstall.Installer(mountpoint) as installation:
         src_autologin = '/etc/systemd/system/getty@tty1.service.d/admin.autologin.conf'
         dst_autologin = f'{installation.target}/etc/systemd/system/getty@tty1.service.d/autologin.conf'
         print(f'Copying {src_autologin} to {dst_autologin}')
+        os.makedirs(os.path.dirname(dst_autologin))
         shutil.copyfile(src_autologin, dst_autologin)
 
         # Copy scripts for home dir, Steam configuration
         src_home = '/etc/skel'
         dst_home = f'{installation.target}/etc/skel'
         print(f'Copying {src_home} to {dst_home}')
-        shutil.copyfile(src_home, dst_home)
+        shutil.copytree(src_home, dst_home)
