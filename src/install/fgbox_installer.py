@@ -99,7 +99,7 @@ with archinstall.Installer(mountpoint) as installation:
         dst_autologin = f'{installation.target}/etc/systemd/system/getty@tty1.service.d/autologin.conf'
         print(f'Copying {src_autologin} to {dst_autologin}')
         dst_autologin_dir = os.path.dirname(dst_autologin)
-        if not os.path.exists(dst_autologin_dir)
+        if not os.path.exists(dst_autologin_dir):
             os.makedirs(dst_autologin_dir)
         shutil.copyfile(src_autologin, dst_autologin)
 
