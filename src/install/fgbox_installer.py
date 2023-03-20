@@ -3,6 +3,7 @@
 import archinstall
 from archinstall import User
 import pathlib
+import shutil
 
 # TODO: Migrate to config
 ADDITIONAL_PACKAGES=[
@@ -91,3 +92,9 @@ with archinstall.Installer(mountpoint) as installation:
             archinstall.run_custom_user_commands(archinstall.arguments['custom-commands'], installation)
 
         installation.genfstab()
+
+        # Set up autologin
+        src_autologin = '/etc/systemd/system/getty@tty1.service.d/admin.autologin.conf'
+        dst_autologin = f'{installation.target}/etc/systemd/system/getty@tty1.service.d/autologin.conf'
+        print(f'Copying {src_autologin} to {dst_autologin}')
+        shutil.copyfile(src_autologin, dst_autologin)
