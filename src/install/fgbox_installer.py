@@ -87,4 +87,7 @@ with archinstall.Installer(mountpoint) as installation:
         if (root_pw := archinstall.arguments.get('!root-password', None)) and len(root_pw):
             installation.user_set_pw('root', root_pw)
 
+        if archinstall.arguments.get('custom-commands', None):
+            archinstall.run_custom_user_commands(archinstall.arguments['custom-commands'], installation)
+
         installation.genfstab()
